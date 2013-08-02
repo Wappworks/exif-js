@@ -290,6 +290,17 @@ var EXIF = (function() {
             4 : "R",
             5 : "G",
             6 : "B"
+        },
+
+        Orientation : {
+            1 : "normal",
+            2 : "flipX",
+            3 : "cw180",
+            4 : "flipY",                 // cw180_flipX
+            5 : "ccw90_flipX",
+            6 : "cw90",
+            7 : "cw90_flipX",
+            8 : "ccs90"
         }
     };
 
