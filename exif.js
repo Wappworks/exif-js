@@ -298,9 +298,9 @@ var EXIF = (function() {
             3 : "cw180",
             4 : "flipY",                 // cw180_flipX
             5 : "ccw90_flipX",
-            6 : "cw90",
+            6 : "ccw90",
             7 : "cw90_flipX",
-            8 : "ccs90"
+            8 : "cw90"
         }
     };
 
