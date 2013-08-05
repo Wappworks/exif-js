@@ -544,6 +544,7 @@ var EXIF = (function() {
                     case "Sharpness" : 
                     case "SubjectDistanceRange" :
                     case "FileSource" :
+                    case "Orientation" :
                         exifData[tag] = StringValues[tag][exifData[tag]];
                         break;
         
