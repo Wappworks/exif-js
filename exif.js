@@ -528,39 +528,9 @@ var EXIF = (function() {
         if (tags.ExifIFDPointer) {
             exifData = readTags(file, tiffOffset, tiffOffset + tags.ExifIFDPointer, ExifTags, bigEnd);
             for (tag in exifData) {
-                switch (tag) {
-                    case "LightSource" :
-                    case "Flash" :
-                    case "MeteringMode" :
-                    case "ExposureProgram" :
-                    case "SensingMethod" :
-                    case "SceneCaptureType" :
-                    case "SceneType" :
-                    case "CustomRendered" :
-                    case "WhiteBalance" : 
-                    case "GainControl" : 
-                    case "Contrast" :
-                    case "Saturation" :
-                    case "Sharpness" : 
-                    case "SubjectDistanceRange" :
-                    case "FileSource" :
-                    case "Orientation" :
-                        exifData[tag] = StringValues[tag][exifData[tag]];
-                        break;
-        
-                    case "ExifVersion" :
-                    case "FlashpixVersion" :
-                        exifData[tag] = String.fromCharCode(exifData[tag][0], exifData[tag][1], exifData[tag][2], exifData[tag][3]);
-                        break;
-        
-                    case "ComponentsConfiguration" : 
-                        exifData[tag] = 
-                            StringValues.Components[exifData[tag][0]]
-                            + StringValues.Components[exifData[tag][1]]
-                            + StringValues.Components[exifData[tag][2]]
-                            + StringValues.Components[exifData[tag][3]];
-                        break;
-                }
+                if( !exifData.hasOwnProperty(tag) )
+                    continue;
+
                 tags[tag] = exifData[tag];
             }
         }
@@ -577,6 +547,46 @@ var EXIF = (function() {
                         break;
                 }
                 tags[tag] = gpsData[tag];
+            }
+        }
+
+        // Interpret the tags...
+        for (tag in tags) {
+            if( !tags.hasOwnProperty(tag) )
+                continue;
+
+            switch (tag) {
+                case "LightSource" :
+                case "Flash" :
+                case "MeteringMode" :
+                case "ExposureProgram" :
+                case "SensingMethod" :
+                case "SceneCaptureType" :
+                case "SceneType" :
+                case "CustomRendered" :
+                case "WhiteBalance" :
+                case "GainControl" :
+                case "Contrast" :
+                case "Saturation" :
+                case "Sharpness" :
+                case "SubjectDistanceRange" :
+                case "FileSource" :
+                case "Orientation" :
+                    tags[tag] = StringValues[tag][tags[tag]];
+                    break;
+
+                case "ExifVersion" :
+                case "FlashpixVersion" :
+                    tags[tag] = String.fromCharCode(tags[tag][0], tags[tag][1], tags[tag][2], tags[tag][3]);
+                    break;
+
+                case "ComponentsConfiguration" :
+                    tags[tag] =
+                        StringValues.Components[tags[tag][0]]
+                            + StringValues.Components[tags[tag][1]]
+                            + StringValues.Components[tags[tag][2]]
+                            + StringValues.Components[tags[tag][3]];
+                    break;
             }
         }
 
